@@ -1,0 +1,24 @@
+#include <windows.h>
+#include <iostream>
+#include <time.h>
+#include <WinUser.h>
+#pragma comment(lib, "Dll.lib")
+
+using namespace std;
+
+_declspec(dllimport) void SetHookOn();
+_declspec(dllimport) void SetHookOff();
+
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+	MSG msg;
+	SetHookOn();
+
+	while (GetMessage(&msg, 0, 0, 0))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	};
+	SetHookOff();
+	return msg.wParam;
+}
